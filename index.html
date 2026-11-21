@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | TaskFlow</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span class="brand-logo">⚡</span> TaskFlow
+      </div>
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-link" data-page="dashboard"><span class="nav-icon">📊</span> Dashboard</a>
+        <a href="pages/projects.html" class="nav-link" data-page="projects"><span class="nav-icon">📁</span> Projects</a>
+        <a href="pages/tasks.html" class="nav-link" data-page="tasks"><span class="nav-icon">✅</span> Tasks <span class="nav-tag"></span></a>
+        <a href="pages/calendar.html" class="nav-link" data-page="calendar"><span class="nav-icon">📅</span> Calendar</a>
+        <a href="pages/settings.html" class="nav-link" data-page="settings"><span class="nav-icon">⚙️</span> Settings</a>
+      </nav>
+      <div class="sidebar-foot">
+        <p>TaskFlow v1.0</p>
+        <p class="muted small">Data is stored locally in your browser.</p>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <button class="icon-btn" id="menuBtn" aria-label="Menu">☰</button>
+        <h1 class="page-title">Dashboard</h1>
+        <div class="topbar-actions">
+          <button class="icon-btn" id="themeToggle" title="Toggle theme">🌙</button>
+          <div class="notif-wrap">
+            <button class="icon-btn" id="notifBtn" title="Notifications">🔔<span id="notifBadge" class="badge">0</span></button>
+            <div id="notifPanel" class="notif-panel"></div>
+          </div>
+          <div class="avatar" title="User">TF</div>
+        </div>
+      </header>
+
+      <main class="content">
+
+        <!-- KPI cards -->
+        <section class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-icon" style="background:rgba(99,102,241,.12)">📁</span>
+            <div><p class="stat-label">Total Projects</p><p class="stat-value" id="statProjects">0</p></div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon" style="background:rgba(59,130,246,.12)">✅</span>
+            <div><p class="stat-label">Total Tasks</p><p class="stat-value" id="statTasks">0</p></div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon" style="background:rgba(16,185,129,.12)">✔️</span>
+            <div><p class="stat-label">Completed</p><p class="stat-value" id="statCompleted">0</p></div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon" style="background:rgba(245,158,11,.12)">⏳</span>
+            <div><p class="stat-label">In Progress</p><p class="stat-value" id="statInProgress">0</p></div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon" style="background:rgba(148,163,184,.12)">📝</span>
+            <div><p class="stat-label">To Do</p><p class="stat-value" id="statTodo">0</p></div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon" style="background:rgba(239,68,68,.12)">🔴</span>
+            <div><p class="stat-label">Overdue</p><p class="stat-value" id="statOverdue">0</p></div>
+          </div>
+        </section>
+
+        <!-- Charts row -->
+        <section class="grid-2">
+          <div class="card">
+            <h3 class="card-title">Task Completion</h3>
+            <div class="ring-wrap">
+              <div class="completion-ring" id="completionRing"><span>0%</span></div>
+              <p class="muted">of all tasks completed</p>
+            </div>
+          </div>
+          <div class="card">
+            <h3 class="card-title">Tasks by Status</h3>
+            <div class="chart-box"><canvas id="statusChart"></canvas></div>
+          </div>
+        </section>
+
+        <section class="grid-2">
+          <div class="card">
+            <h3 class="card-title">Tasks by Priority</h3>
+            <div class="chart-box"><canvas id="priorityChart"></canvas></div>
+          </div>
+          <div class="card">
+            <h3 class="card-title">Recent Activity</h3>
+            <div id="activityList" class="activity-list"></div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/notifications.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

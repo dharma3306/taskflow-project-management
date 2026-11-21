@@ -1,0 +1,279 @@
+/* ============================================================
+   TaskFlow - dashboard.css
+   KPI cards, charts, activity feed, Kanban board,
+   calendar, settings, projects grid.
+   ============================================================ */
+
+/* ---------------- Dashboard KPI cards ---------------- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow);
+}
+
+.stat-icon {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  display: grid; place-items: center;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.stat-label { font-size: .75rem; color: var(--muted); font-weight: 600; }
+.stat-value { font-size: 1.45rem; font-weight: 800; line-height: 1.2; }
+
+/* ---------------- Completion ring & charts ---------------- */
+.ring-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 8px 0; }
+
+.completion-ring {
+  width: 150px; height: 150px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  position: relative;
+}
+
+.completion-ring::before {
+  content: '';
+  position: absolute;
+  inset: 14px;
+  border-radius: 50%;
+  background: var(--surface);
+}
+
+.completion-ring span {
+  position: relative;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.chart-box { height: 230px; display: flex; justify-content: center; }
+
+/* ---------------- Activity feed ---------------- */
+.activity-list { display: flex; flex-direction: column; }
+
+.activity-item {
+  display: flex;
+  gap: 12px;
+  padding: 10px 2px;
+  border-bottom: 1px solid var(--border);
+  font-size: .88rem;
+}
+
+.activity-item:last-child { border-bottom: none; }
+.activity-item small { color: var(--muted); }
+
+.activity-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+  background: var(--info);
+}
+
+.activity-success .activity-dot { background: var(--success); }
+.activity-danger  .activity-dot { background: var(--danger); }
+.activity-info    .activity-dot { background: var(--info); }
+
+/* ---------------- Projects grid ---------------- */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 18px;
+}
+
+.project-card { display: flex; flex-direction: column; gap: 10px; }
+
+/* ---------------- Kanban board ---------------- */
+.kanban {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.kanban-col {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  min-height: 300px;
+}
+
+.kanban-col-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: .9rem;
+  padding: 4px 6px 12px;
+}
+
+.col-count {
+  margin-left: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  font-size: .75rem;
+  padding: 1px 9px;
+  color: var(--muted);
+}
+
+.dot { width: 9px; height: 9px; border-radius: 50%; }
+.dot-todo     { background: #94a3b8; }
+.dot-progress { background: var(--info); }
+.dot-done     { background: var(--success); }
+
+.kanban-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 180px;
+  border-radius: 10px;
+  transition: background .15s, outline .15s;
+}
+
+.kanban-list.drag-over { background: rgba(99, 102, 241, .08); outline: 2px dashed var(--primary); outline-offset: 4px; }
+
+.kanban-empty {
+  text-align: center;
+  color: var(--muted);
+  font-size: .82rem;
+  padding: 26px 0;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+}
+
+.task-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  cursor: grab;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, .06);
+  transition: box-shadow .15s, transform .15s;
+}
+
+.task-card:hover { box-shadow: 0 6px 18px rgba(15, 23, 42, .12); transform: translateY(-1px); }
+.task-card.dragging { opacity: .5; cursor: grabbing; }
+
+.task-card-head { display: flex; gap: 6px; margin-bottom: 8px; }
+.task-card h4 { font-size: .92rem; margin-bottom: 4px; }
+.task-card-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: .75rem;
+  color: var(--muted);
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.task-card-actions { display: flex; gap: 6px; margin-top: 10px; }
+
+/* ---------------- Calendar ---------------- */
+.cal-title { font-size: 1.2rem; font-weight: 700; }
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.cal-weekday {
+  text-align: center;
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--muted);
+  padding: 6px 0;
+}
+
+.cal-cell {
+  min-height: 104px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden;
+}
+
+.cal-empty { background: transparent; border-color: transparent; }
+
+.cal-today { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
+
+.cal-day { font-size: .8rem; font-weight: 700; }
+
+.cal-task {
+  font-size: .68rem;
+  font-weight: 600;
+  padding: 3px 7px;
+  border-radius: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #fff;
+}
+
+.status-todo        { background: #94a3b8; }
+.status-in-progress { background: var(--info); }
+.status-completed   { background: var(--success); }
+.cal-overdue        { background: var(--danger) !important; }
+
+.legend {
+  display: flex;
+  gap: 20px;
+  font-size: .82rem;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+
+.legend span { display: flex; align-items: center; gap: 7px; }
+
+.legend-swatch { width: 12px; height: 12px; border-radius: 4px; display: inline-block; }
+
+/* ---------------- Settings ---------------- */
+.theme-options { display: flex; gap: 16px; margin-top: 12px; flex-wrap: wrap; }
+
+.theme-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: .88rem;
+  font-weight: 600;
+}
+
+.theme-option input { accent-color: var(--primary); }
+
+.theme-preview {
+  width: 120px; height: 76px;
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  transition: border-color .15s;
+}
+
+.theme-option input:checked + .theme-preview { border-color: var(--primary); }
+
+.theme-preview-light {
+  background: linear-gradient(#fff 55%, #f1f5f9 55%);
+}
+
+.theme-preview-dark {
+  background: linear-gradient(#1e293b 55%, #0f172a 55%);
+}
+
+.danger-card { border-color: rgba(239, 68, 68, .4); }

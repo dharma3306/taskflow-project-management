@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings | TaskFlow</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span class="brand-logo">⚡</span> TaskFlow
+      </div>
+      <nav class="sidebar-nav">
+        <a href="../index.html" class="nav-link" data-page="dashboard"><span class="nav-icon">📊</span> Dashboard</a>
+        <a href="../pages/projects.html" class="nav-link" data-page="projects"><span class="nav-icon">📁</span> Projects</a>
+        <a href="../pages/tasks.html" class="nav-link" data-page="tasks"><span class="nav-icon">✅</span> Tasks <span class="nav-tag"></span></a>
+        <a href="../pages/calendar.html" class="nav-link" data-page="calendar"><span class="nav-icon">📅</span> Calendar</a>
+        <a href="../pages/settings.html" class="nav-link" data-page="settings"><span class="nav-icon">⚙️</span> Settings</a>
+      </nav>
+      <div class="sidebar-foot">
+        <p>TaskFlow v1.0</p>
+        <p class="muted small">Data is stored locally in your browser.</p>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <button class="icon-btn" id="menuBtn" aria-label="Menu">☰</button>
+        <h1 class="page-title">Settings</h1>
+        <div class="topbar-actions">
+          <button class="icon-btn" id="themeToggle" title="Toggle theme">🌙</button>
+          <div class="notif-wrap">
+            <button class="icon-btn" id="notifBtn" title="Notifications">🔔<span id="notifBadge" class="badge">0</span></button>
+            <div id="notifPanel" class="notif-panel"></div>
+          </div>
+          <div class="avatar" title="User">TF</div>
+        </div>
+      </header>
+
+      <main class="content">
+
+        <div class="grid-2">
+          <div class="card">
+            <h3 class="card-title">Appearance</h3>
+            <p class="muted">Choose how TaskFlow looks on this device.</p>
+            <div class="theme-options">
+              <label class="theme-option">
+                <input type="radio" name="theme" value="light">
+                <span class="theme-preview theme-preview-light"></span>
+                <span>☀️ Light Mode</span>
+              </label>
+              <label class="theme-option">
+                <input type="radio" name="theme" value="dark">
+                <span class="theme-preview theme-preview-dark"></span>
+                <span>🌙 Dark Mode</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">Data</h3>
+            <p class="muted" id="dataSummary"></p>
+            <div class="form-actions">
+              <button class="btn btn-ghost" id="exportData">⬇ Export backup (JSON)</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card danger-card">
+          <h3 class="card-title">Danger Zone</h3>
+          <p class="muted">Permanently delete all projects, tasks, activities and settings stored in this browser. This cannot be undone.</p>
+          <button class="btn btn-danger" id="clearData">🗑 Clear all application data</button>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/storage.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/notifications.js"></script>
+
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    App.init('settings');
+    Notifications.greet();
+    renderSettings();
+
+    $$('input[name="theme"]').forEach(r => r.addEventListener('change', e => {
+      App.setTheme(e.target.value);
+      showToast(e.target.value === 'dark' ? 'Dark mode enabled' : 'Light mode enabled', 'info');
+      renderSettings();
+    }));
+
+    $('#exportData').addEventListener('click', () => {
+      const data = {
+        projects: Storage.getProjects(),
+        tasks: Storage.getTasks(),
+        activities: Storage.getActivities(),
+        settings: Storage.getSettings()
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'taskflow-backup.json';
+      a.click();
+      URL.revokeObjectURL(a.href);
+      showToast('Backup downloaded', 'success');
+    });
+
+    $('#clearData').addEventListener('click', () => {
+      if (!confirm('This permanently deletes ALL TaskFlow data in this browser. Continue?')) return;
+      Storage.clearAll();
+      Storage.seedIfEmpty();
+      App.applyTheme();
+      showToast('All data cleared. Fresh demo data loaded.', 'success');
+      renderSettings();
+      Notifications.renderPanel();
+    });
+  });
+
+  function renderSettings() {
+    const s = Storage.getSettings();
+    $$('input[name="theme"]').forEach(r => { r.checked = r.value === (s.theme || 'light'); });
+    const projects = Storage.getProjects().length;
+    const tasks = Storage.getTasks().length;
+    $('#dataSummary').textContent = 'Currently stored: ' + projects + ' project(s), ' + tasks + ' task(s).';
+  }
+  </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tasks | TaskFlow</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span class="brand-logo">⚡</span> TaskFlow
+      </div>
+      <nav class="sidebar-nav">
+        <a href="../index.html" class="nav-link" data-page="dashboard"><span class="nav-icon">📊</span> Dashboard</a>
+        <a href="../pages/projects.html" class="nav-link" data-page="projects"><span class="nav-icon">📁</span> Projects</a>
+        <a href="../pages/tasks.html" class="nav-link" data-page="tasks"><span class="nav-icon">✅</span> Tasks <span class="nav-tag"></span></a>
+        <a href="../pages/calendar.html" class="nav-link" data-page="calendar"><span class="nav-icon">📅</span> Calendar</a>
+        <a href="../pages/settings.html" class="nav-link" data-page="settings"><span class="nav-icon">⚙️</span> Settings</a>
+      </nav>
+      <div class="sidebar-foot">
+        <p>TaskFlow v1.0</p>
+        <p class="muted small">Data is stored locally in your browser.</p>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <button class="icon-btn" id="menuBtn" aria-label="Menu">☰</button>
+        <h1 class="page-title">Tasks</h1>
+        <div class="topbar-actions">
+          <button class="icon-btn" id="themeToggle" title="Toggle theme">🌙</button>
+          <div class="notif-wrap">
+            <button class="icon-btn" id="notifBtn" title="Notifications">🔔<span id="notifBadge" class="badge">0</span></button>
+            <div id="notifPanel" class="notif-panel"></div>
+          </div>
+          <div class="avatar" title="User">TF</div>
+        </div>
+      </header>
+
+      <main class="content">
+
+        <div class="toolbar">
+          <input type="search" id="taskSearch" class="input" placeholder="🔍 Search tasks...">
+          <select id="priorityFilter" class="input input-sm">
+            <option value="">All priorities</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+            <option value="critical">Critical</option>
+          </select>
+          <select id="projectFilter" class="input input-sm"></select>
+          <button class="btn btn-ghost" id="clearFilters">Clear</button>
+          <button class="btn btn-primary" id="newTaskBtn">+ New Task</button>
+        </div>
+
+        <div class="kanban">
+          <div class="kanban-col" id="col-todo" data-status="todo">
+            <div class="kanban-col-head"><span class="dot dot-todo"></span> To Do <span class="col-count">0</span></div>
+            <div class="kanban-list"></div>
+          </div>
+          <div class="kanban-col" id="col-in-progress" data-status="in-progress">
+            <div class="kanban-col-head"><span class="dot dot-progress"></span> In Progress <span class="col-count">0</span></div>
+            <div class="kanban-list"></div>
+          </div>
+          <div class="kanban-col" id="col-completed" data-status="completed">
+            <div class="kanban-col-head"><span class="dot dot-done"></span> Completed <span class="col-count">0</span></div>
+            <div class="kanban-list"></div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/storage.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/notifications.js"></script>
+
+  <script src="../js/tasks.js"></script>
+</body>
+</html>
